@@ -1,0 +1,20 @@
+{
+  "name": "fan-app",
+  "version": "0.0.1",
+  "description": "Fan app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "k&d team",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "cors": "2.8.3",
+    "express": "4.15.3",
+    "jsonwebtoken": "7.4.1",
+    "passport": "0.3.2",
+    "passport-local": "1.0.0",
+    "validator": "7.2.0"
+  }
+}
