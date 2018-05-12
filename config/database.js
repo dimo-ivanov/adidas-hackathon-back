@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
-const User = require('../data/models/User')
+const Event = require('../data/models/Event')
+
+require('../data/models/User')
+require('../data/models/ChatSession')
+require('../data/models/ChatMessage')
 
 mongoose.Promise = global.Promise
 
@@ -15,7 +19,7 @@ module.exports = (settings) => {
 
     console.log('MongoDB ready!')
 
-    User.seedAdminUser()
+    Event.seedDemoEvent()
   })
 
   db.on('error', err => console.log(`Database Error: ${err}`))
