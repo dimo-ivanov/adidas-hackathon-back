@@ -1,5 +1,6 @@
 const PassportLocalStrategy = require('passport-local').Strategy
-const usersData = require('../data/users')
+const User = require('mongoose').model('User')
+const encryption = require('../utilities/encryption')
 
 module.exports = new PassportLocalStrategy({
   usernameField: 'email',
@@ -9,16 +10,27 @@ module.exports = new PassportLocalStrategy({
 }, (req, email, password, done) => {
   const user = {
     email: email.trim(),
-    password: password.trim(),
-    name: req.body.name.trim()
+    password: password.trim()
   }
 
-  const existingUser = usersData.findByEmail(email)
-  if (existingUser) {
-    return done('E-mail already exists!')
-  }
+  User
+    .findOne({ email: email })
+    .then(existingUser => {
+      if (existingUser) {
+        return done('E-mail already exists!')
+      }
 
-  usersData.save(user)
+      let salt = encryption.generateSalt()
+      let hashedPass = encryption.generateHashedPassword(salt, user.password)
 
-  return done(null)
+      User
+        .create({
+          email: user.email,
+          salt: salt,
+          hashedPass: hashedPass,
+          roles: []
+        })
+
+      return done(null)
+    })
 })

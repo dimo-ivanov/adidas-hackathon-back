@@ -1,5 +1,5 @@
+const User = require('mongoose').model('User')
 const jwt = require('jsonwebtoken')
-const usersData = require('../data/users')
 const PassportLocalStrategy = require('passport-local').Strategy
 
 module.exports = new PassportLocalStrategy({
@@ -13,33 +13,33 @@ module.exports = new PassportLocalStrategy({
     password: password.trim()
   }
 
-  let savedUser = usersData.findByEmail(email)
+  User
+    .findOne({ email: user.email })
+    .then(savedUser => {
+      if (!savedUser) {
+        const error = new Error('Incorrect email or password')
+        error.name = 'IncorrectCredentialsError'
 
-  if (!savedUser) {
-    const error = new Error('Incorrect email or password')
-    error.name = 'IncorrectCredentialsError'
+        return done(error)
+      }
 
-    return done(error)
-  }
+      if (!savedUser.authenticate(user.password)) {
+        const error = new Error('Incorrect email or password')
+        error.name = 'IncorrectCredentialsError'
 
-  const isMatch = savedUser.password === user.password
+        return done(error)
+      }
 
-  if (!isMatch) {
-    const error = new Error('Incorrect email or password')
-    error.name = 'IncorrectCredentialsError'
+      const payload = {
+        sub: savedUser._id
+      }
 
-    return done(error)
-  }
+      // create a token string
+      const token = jwt.sign(payload, 's0m3 r4nd0m str1ng')
+      const data = {
+        email: savedUser.email
+      }
 
-  const payload = {
-    sub: savedUser.id
-  }
-
-  // create a token string
-  const token = jwt.sign(payload, 's0m3 r4nd0m str1ng')
-  const data = {
-    name: savedUser.name
-  }
-
-  return done(null, token, data)
+      return done(null, token, data)
+    })
 })
