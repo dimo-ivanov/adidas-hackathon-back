@@ -10,6 +10,15 @@ const sendInitData = (socket) => {
     })
 }
 
+const createMinievent = (data, socket) => {
+  Minievent
+    .create(data)
+    .then(minievent => {
+      socket.emit('socket-message', { action: 'socket/NEW_MINIEVENT', minievent })
+    })
+}
+
 module.exports = {
-  init: sendInitData
+  init: sendInitData,
+  createMinievent: createMinievent
 }

@@ -8,8 +8,7 @@ module.exports = (server) => {
     SocketController.init(socket)
 
     socket.on('socket-message', (payload) => {
-      console.log('PAYLOAD: ', payload)
-      // SocketController[payload.action] && SocketController[payload.action](payload.data, socket)
+      SocketController[payload.action] && SocketController[payload.action](payload.data, socket)
     })
   })
 }
