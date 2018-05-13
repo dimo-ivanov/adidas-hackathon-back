@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const ChatSession = require('./ChatSession')
 
 const eventSchema = new mongoose.Schema({
   name: { type: String, required: true, default: 'game' },
@@ -34,26 +33,6 @@ module.exports.seedDemoEvent = () => {
           guestTeam: 'FC Bayern München',
           start: startTime,
           end: endTime
-        })
-        .then(event => {
-          ChatSession
-            .create([
-              {
-                users: [],
-                type: 'general',
-                event: event._id
-              },
-              {
-                users: [],
-                type: 'homeTeam',
-                event: event._id
-              },
-              {
-                users: [],
-                type: 'guestTeam',
-                event: event._id
-              }
-            ])
         })
     })
 }

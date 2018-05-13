@@ -3,8 +3,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
-const localSignupStrategy = require('../passport/local-signup')
-const localLoginStrategy = require('../passport/local-login')
+// const localSignupStrategy = require('../passport/local-signup')
+// const localLoginStrategy = require('../passport/local-login')
 
 module.exports = (app) => {
   app.use(cookieParser())
@@ -19,8 +19,8 @@ module.exports = (app) => {
   app.use(passport.session())
   app.use(cors())
 
-  passport.use('local-signup', localSignupStrategy)
-  passport.use('local-login', localLoginStrategy)
+  // passport.use('local-signup', localSignupStrategy)
+  // passport.use('local-login', localLoginStrategy)
 
   console.log('Express ready!')
 }

@@ -16,7 +16,7 @@ router.get('/:code', (req, res) => {
         })
       }
 
-      res.status(200).json(event)
+      res.status(200).json({ success: true, event })
     })
     .catch(err => {
       return res.status(200).json({

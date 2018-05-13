@@ -7,9 +7,9 @@ module.exports = (app) => {
 
   app.use('/events', eventsRoutes)
 
-  app.all('*', (req, res) => {
-    res.status(404)
-    res.send('404 Not Found!')
-    res.end()
-  })
+  // app.all('*', (req, res) => {
+  //   res.status(404)
+  //   res.send('404 Not Found!')
+  //   res.end()
+  // })
 }

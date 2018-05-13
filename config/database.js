@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const Event = require('../data/models/Event')
 
-require('../data/models/User')
-require('../data/models/ChatSession')
-require('../data/models/ChatMessage')
+require('../data/models/Minievent')
 
 mongoose.Promise = global.Promise
 
